@@ -368,7 +368,7 @@ test("坊市：在拍列表看得见法宝词缀、符纹与物品说明；榜�
   await p.tick(120);
   assert.match(p.text(), /精铁剑（3星）（1纹）.*攻击 6 · 锋锐 \+12 · 符纹：防御/, "法宝的底数、词缀、符纹都列出来");
   assert.match(p.text(), /回血丹×3.*回复一半气血/, "非法宝给说明文字");
-  assert.match(p.text(), /珍宝阁.*白银会员/, "珍宝阁卡片带解锁说明");
+  assert.match(p.text(), /珍宝阁.*VIP1/, "珍宝阁卡片带解锁说明");
   // 榜单前三
   for (let u = 1; u <= 3; u++) site.shared.set(`p:${u}`, { uid: u, n: "榜上人" + u, r: 4, s: 2, pw: 1000 * u, pa: "jian", title: u === 1 ? "斩妖人" : null, t: site.now });
   await p.tab("榜单");

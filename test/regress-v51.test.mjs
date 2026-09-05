@@ -99,7 +99,7 @@ test("掉落：妖兽会什么神通就可能掉什么秘籍；妖潮与会员�
 });
 
 test("会员数值表：修炼、离线、游历次数、供奉上限与兑换率、突破与渡劫、每日礼一天一次", async () => {
-  assert.equal(VIP_MOD.length, 5);
+  assert.equal(VIP_MOD.length, 10);
   const s = new Site();
   await setup(s, 5, "王者", (c) => { c.r = 2; c.ls = 0; });
   const base = s.char(5);
@@ -126,7 +126,7 @@ test("会员数值表：修炼、离线、游历次数、供奉上限与兑换�
   // 供奉上限随等级
   v = await s.call(5, "energy");
   assert.equal(v.data.energy.daily, 10);
-  assert.ok(v.data.energy.vip.table.length >= 14 && v.data.energy.vip.table[0].v.length === 4, "对比表四列");
+  assert.ok(v.data.energy.vip.table.length === 9 && v.data.energy.vip.table[0].length === v.data.energy.vip.cols.length, "对比表九行");
   assert.equal(v.data.energy.vip.now.rate, 1.35);
   // 游历次数
   v = await s.call(5, "regions");

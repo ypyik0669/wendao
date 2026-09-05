@@ -63,18 +63,18 @@ test("补偿 v46：事故前建的号领一次小包，事故后建的号不领�
 });
 
 test("会员等级：按累计供奉能量升，跨转世；供奉时累计并立刻生效", async () => {
-  assert.equal(vipLevel(0), 0); assert.equal(vipLevel(5), 1); assert.equal(vipLevel(19), 1); assert.equal(vipLevel(20), 2); assert.equal(vipLevel(100), 4); assert.equal(vipLevel(999), 4);
+  assert.equal(vipLevel(0), 0); assert.equal(vipLevel(5), 1); assert.equal(vipLevel(19), 1); assert.equal(vipLevel(20), 2); assert.equal(vipLevel(100), 4); assert.equal(vipLevel(999), 8); assert.equal(vipLevel(5000), 9);
   const s = new Site();
   await setup(s, 4, "会员");
   s.points.set(4, 100);
   let v = await s.call(4, "energy");
   assert.equal(v.data.energy.vip.lv, 0);
-  assert.equal(v.data.energy.vip.next, "白银");
+  assert.equal(v.data.energy.vip.next, "VIP1");
   await s.call(4, "energy.offer", { n: 5 });
   assert.equal(s.kv.get(4).get("legacy").en, 5, "累计写进 legacy");
   v = await s.call(4, "energy");
   assert.equal(v.data.energy.vip.lv, 1);
-  assert.equal(v.data.energy.vip.name, "白银");
+  assert.equal(v.data.energy.vip.name, "VIP1");
   assert.equal(v.me.vip, 1, "summary 带等级");
   // 转世不丢
   s.setChar(4, (c) => { c.dead = { cause: "test" }; });
@@ -121,7 +121,7 @@ test("会员权益：补货次数、第四张悬赏、离线上限、手续费�
   assert.equal(v.data.ach.titles[0].id, "vip");
   r = await s.call(5, "ach.title", { id: "vip" });
   assert.equal(r.ok, true);
-  assert.equal(s.char(5).title, "黄金道友");
+  assert.equal(s.char(5).title, "VIP2 道友");
   setEn(s, 5, 0);
   r = await s.call(5, "ach.title", { id: "vip" });
   assert.equal(r.ok, false);
